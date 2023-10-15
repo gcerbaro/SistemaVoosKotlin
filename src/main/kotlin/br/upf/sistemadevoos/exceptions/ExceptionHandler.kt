@@ -20,7 +20,7 @@ class ExceptionHandler {
         return ErrorResponseDTO(
             status = HttpStatus.NOT_FOUND.value(),
             error = HttpStatus.NOT_FOUND.name,
-            massage = exception.message,
+            message = exception.message,
             path = request.servletPath
         )
     }
@@ -34,7 +34,7 @@ class ExceptionHandler {
         return ErrorResponseDTO(
             status = HttpStatus.INTERNAL_SERVER_ERROR.value(),
             error = HttpStatus.INTERNAL_SERVER_ERROR.name,
-            massage = exception.message ?: "Erro desconhecido!",
+            message = exception.message ?: "Erro desconhecido!",
             path = request.servletPath
         )
     }
@@ -52,7 +52,7 @@ class ExceptionHandler {
         return ErrorResponseDTO(
             status = HttpStatus.BAD_REQUEST.value(),
             error = HttpStatus.BAD_REQUEST.name,
-            massage = errorMessage.toString(),
+            message = errorMessage.toString(),
             path = request.servletPath
         )
     }

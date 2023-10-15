@@ -13,5 +13,5 @@ data class Usuario(
     val cidade: String,
     val telefone: String,
     @OneToMany
-    val tickets: List<Ticket> = listOf()
+    var tickets: List<Ticket> = listOf()
 )

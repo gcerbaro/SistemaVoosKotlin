@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface VooRepository: JpaRepository<Voo, Long> {
 
-    fun findByNome(nomeEvento: String, paginacao: Pageable): Page<Voo>
+    fun findByOrigem(origem: String, paginacao: Pageable): Page<Voo>
+
+
 }

@@ -12,5 +12,5 @@ data class Voo(
     val origem: String,
     val destino: String,
     val nAssentos: Int,
-    val assentosDisp: List<String> = listOf()
+    var assentosDisp: List<Int> = listOf()
 )

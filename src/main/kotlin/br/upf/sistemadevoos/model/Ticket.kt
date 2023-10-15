@@ -9,9 +9,9 @@ data class Ticket(
     val id: Long? = null,
     val valor: Float,
     val data: LocalDateTime,
-    val assento: String,
+    val assento: Int,
     @OneToOne
-    val vooId: Voo,
+    val vooID: Voo,
     @OneToOne
-    val usuarioId: Usuario
+    val usuarioID: Usuario
 )

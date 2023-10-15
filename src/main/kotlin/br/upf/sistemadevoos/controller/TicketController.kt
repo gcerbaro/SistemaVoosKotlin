@@ -1,8 +1,8 @@
 package br.upf.sistemadevoos.controller
 
-import br.upf.sistemadevoos.dtos.UsuarioDTO
-import br.upf.sistemadevoos.dtos.UsuarioResponseDTO
-import br.upf.sistemadevoos.service.UsuarioService
+import br.upf.sistemadevoos.dtos.TicketDTO
+import br.upf.sistemadevoos.dtos.TicketResponseDTO
+import br.upf.sistemadevoos.service.TicketService
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -10,37 +10,38 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 
+
 @RestController
-@RequestMapping("/usuarios")
-class UsuarioController (val service: UsuarioService<Any?>){
+@RequestMapping("/ticket")
+class TicketController(val service: TicketService){
 
     @GetMapping
-    fun listar(): List<UsuarioResponseDTO> {
+    fun listar(): List<TicketResponseDTO> {
         return service.listar()
     }
 
     @GetMapping("/{id}")
-    fun buscarPorId(@PathVariable id: Long): UsuarioResponseDTO {
+    fun buscarPorId(@PathVariable id: Long): TicketResponseDTO {
         return service.buscarPorId(id)
     }
 
     @PostMapping
     @Transactional
-    fun cadastrar(@RequestBody @Valid dto: UsuarioDTO,
+    fun cadastrar(@RequestBody @Valid dto: TicketDTO,
                   uriBuilder: UriComponentsBuilder
-    ): ResponseEntity<UsuarioResponseDTO> {
-        val userResponse = service.cadastrar(dto)
-        val uri = uriBuilder.path("/usuarios/${userResponse.id}")
+    ): ResponseEntity<TicketResponseDTO> {
+        val ticketResponse = service.cadastrar(dto)
+        val uri = uriBuilder.path("/ticket/${ticketResponse.id}")
             .build().toUri()
-        return ResponseEntity.created(uri).body(userResponse)
+        return ResponseEntity.created(uri).body(ticketResponse)
     }
 
     @PutMapping("/{id}")
     @Transactional
     fun atualizar(@PathVariable id: Long,
-                  @RequestBody @Valid dto: UsuarioDTO
-    ): UsuarioResponseDTO {
-        return service.atualizar(id, dto)
+                  @RequestBody @Valid dto: TicketDTO
+    ): TicketResponseDTO {
+        return service.atualizar(id)
     }
 
     @DeleteMapping("/{id}")

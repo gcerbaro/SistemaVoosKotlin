@@ -9,6 +9,6 @@ class AuthorizationService(
     val repository: UsuarioRepository
 ) : UserDetailsService {
 
-    override fun loadUserByUsername(telefone: String) =
-        repository.findByTelefone(telefone)
+    override fun loadUserByUsername(email: String) =
+        repository.findByEmail(email)
 }

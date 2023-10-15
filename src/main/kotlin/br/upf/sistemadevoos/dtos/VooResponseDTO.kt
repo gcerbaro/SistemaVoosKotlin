@@ -5,5 +5,5 @@ data class VooResponseDTO(
     val origem: String,
     val destino: String,
     val nAssentos: Int,
-    val assentosDisp: List<String>
+    val assentosDisp: List<Int>
 )

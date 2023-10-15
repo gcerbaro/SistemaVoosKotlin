@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface InscricaoRepository: JpaRepository<Ticket, Long> {
+interface TicketRepository: JpaRepository<Ticket, Long> {
 }
