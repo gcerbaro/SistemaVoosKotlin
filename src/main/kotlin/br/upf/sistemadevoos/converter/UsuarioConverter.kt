@@ -4,7 +4,9 @@ import br.upf.sistemadevoos.dtos.UsuarioDTO
 import br.upf.sistemadevoos.dtos.UsuarioResponseDTO
 import br.upf.sistemadevoos.model.Usuario
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.stereotype.Component
 
+@Component
 class UsuarioConverter {
     fun toUsuarioResponseDTO (usuario: Usuario) : UsuarioResponseDTO {
         return UsuarioResponseDTO(

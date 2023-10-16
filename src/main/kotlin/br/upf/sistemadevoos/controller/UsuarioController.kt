@@ -2,6 +2,7 @@ package br.upf.sistemadevoos.controller
 
 import br.upf.sistemadevoos.dtos.UsuarioDTO
 import br.upf.sistemadevoos.dtos.UsuarioResponseDTO
+import br.upf.sistemadevoos.model.Voo
 import br.upf.sistemadevoos.service.UsuarioService
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
@@ -48,5 +49,17 @@ class UsuarioController (val service: UsuarioService){
     @Transactional
     fun deletar(@PathVariable id: Long) {
         service.deletar(id)
+    }
+
+    @PostMapping("/comprar")
+    @Transactional
+    fun comprarTicket(@PathVariable id: Long, vooId:Long) {
+        service.comprarTicket(id, vooId)
+    }
+
+    @PostMapping("/cancelar")
+    @Transactional
+    fun cancelarTicket(@PathVariable ticketid: Long) {
+        service.cancelarTicket(ticketid)
     }
 }

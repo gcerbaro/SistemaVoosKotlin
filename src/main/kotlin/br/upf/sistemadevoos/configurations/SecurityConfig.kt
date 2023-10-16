@@ -30,6 +30,8 @@ class SecurityConfigurations(val securityFilter: SecurityFilter) {
                 it.requestMatchers(HttpMethod.GET, "/voos", "/usuarios", "/ticket/*").permitAll() // Acesso publico a lista
                     .requestMatchers(HttpMethod.GET, "/voos/*", "/usuarios/*").permitAll() // Acesso publico a item
                     .requestMatchers(HttpMethod.POST, "/voos", "/usuarios").hasRole("ADMIN") // Apenas admin pode criar voos e usuarios
+                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios", "/comprar").hasRole("USER") // Acesso publico a compra de tickets
+                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios", "/cancelar").hasRole("USER") // Acesso publico ao cancelamento de tickets
                     .requestMatchers(HttpMethod.PUT, "/voos/*", "/usuarios/*").hasRole("ADMIN") // Apenas admin pode atualizar informacoes
                     .requestMatchers(HttpMethod.DELETE, "/voos/*", "/usuarios/*").hasRole("ADMIN") // Apenas admin pode deletar
                     .requestMatchers(HttpMethod.GET, "/ticket").hasRole("ADMIN") // Apenas admin tem acesso a lista

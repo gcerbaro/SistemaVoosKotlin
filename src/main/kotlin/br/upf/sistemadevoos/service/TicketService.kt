@@ -5,9 +5,11 @@ import br.upf.sistemadevoos.dtos.TicketDTO
 import br.upf.sistemadevoos.dtos.TicketResponseDTO
 import br.upf.sistemadevoos.exceptions.NotFoundException
 import br.upf.sistemadevoos.repository.TicketRepository
+import org.springframework.stereotype.Service
 
 private const val NFMESSAGE = "Ticket Não encontrado!"
 
+@Service
 class TicketService (private val ticketRepository: TicketRepository,
                      private val converter: TicketConverter){
 

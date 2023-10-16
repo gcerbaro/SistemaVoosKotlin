@@ -3,7 +3,9 @@ package br.upf.sistemadevoos.converter
 import br.upf.sistemadevoos.dtos.TicketDTO
 import br.upf.sistemadevoos.dtos.TicketResponseDTO
 import br.upf.sistemadevoos.model.Ticket
+import org.springframework.stereotype.Component
 
+@Component
 class TicketConverter {
     fun toTicketResponseDTO(ticket: Ticket): TicketResponseDTO {
         return TicketResponseDTO(

@@ -8,10 +8,12 @@ import br.upf.sistemadevoos.model.Ticket
 import br.upf.sistemadevoos.repository.TicketRepository
 import br.upf.sistemadevoos.repository.UsuarioRepository
 import br.upf.sistemadevoos.repository.VooRepository
+import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 private const val NFMESSAGE = "Voo Não encontrado!"
 
+@Service
 class UsuarioService(
     private val repository: UsuarioRepository,
     private val converter: UsuarioConverter,
