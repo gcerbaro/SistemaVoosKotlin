@@ -11,7 +11,7 @@ data class Usuario(
     @Enumerated(value = EnumType.STRING)
     val role: UserRole = UserRole.USER,
     val cidade: String,
-    val telefone: String,
+    val email: String,
     @OneToMany
     var tickets: List<Ticket> = listOf()
 )

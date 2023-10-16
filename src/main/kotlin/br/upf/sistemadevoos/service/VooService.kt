@@ -24,7 +24,7 @@ class VooService (
         val voos = if (voo == null) {
             repository.findAll(paginacao)
         } else {
-            repository.findByNome(voo, paginacao)
+            repository.findByOrigem(voo, paginacao)
         }
         return voos
             .map(converter::toVooResponseDTO)
