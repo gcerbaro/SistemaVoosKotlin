@@ -27,11 +27,12 @@ class SecurityConfigurations(val securityFilter: SecurityFilter) {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
             .authorizeHttpRequests {
-                it.requestMatchers(HttpMethod.POST, "/eventos").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/eventos", "/eventos/*").permitAll()
-                    .requestMatchers("/eventos/*").hasRole("ADMIN")
-                    .requestMatchers("/auth/*").permitAll()
-                    .requestMatchers("/usuarios/*").hasRole("ADMIN")
+                it.requestMatchers(HttpMethod.GET, "/voos", "/usuarios", "/ticket/*").permitAll() // Acesso publico a lista
+                    .requestMatchers(HttpMethod.GET, "/voos/*", "/usuarios/*").permitAll() // Acesso publico a item
+                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios").hasRole("ADMIN") // Apenas admin pode criar voos e usuarios
+                    .requestMatchers(HttpMethod.PUT, "/voos/*", "/usuarios/*").hasRole("ADMIN") // Apenas admin pode atualizar informacoes
+                    .requestMatchers(HttpMethod.DELETE, "/voos/*", "/usuarios/*").hasRole("ADMIN") // Apenas admin pode deletar
+                    .requestMatchers(HttpMethod.GET, "/ticket").hasRole("ADMIN") // Apenas admin tem acesso a lista
                     .anyRequest().authenticated()
             }
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter::class.java)

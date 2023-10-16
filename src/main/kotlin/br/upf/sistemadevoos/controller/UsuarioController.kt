@@ -12,7 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder
 
 @RestController
 @RequestMapping("/usuarios")
-class UsuarioController (val service: UsuarioService<Any?>){
+class UsuarioController (val service: UsuarioService){
 
     @GetMapping
     fun listar(): List<UsuarioResponseDTO> {
