@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfigurations(val securityFilter: SecurityFilter) {
+class SecurityConfig(val securityFilter: LoginChecker) {
 
     @Bean
     fun securityFilterChain(
@@ -29,6 +29,7 @@ class SecurityConfigurations(val securityFilter: SecurityFilter) {
             .authorizeHttpRequests {
                 it.requestMatchers(HttpMethod.GET, "/voos", "/usuarios", "/ticket/*").permitAll() // Acesso publico a lista
                     .requestMatchers(HttpMethod.GET, "/voos/*", "/usuarios/*").permitAll() // Acesso publico a item
+                    .requestMatchers(HttpMethod.POST,"/auth/*").permitAll()
                     .requestMatchers(HttpMethod.POST, "/voos", "/usuarios").hasRole("ADMIN") // Apenas admin pode criar voos e usuarios
                     .requestMatchers(HttpMethod.POST, "/voos", "/usuarios", "/comprar").hasRole("USER") // Acesso publico a compra de tickets
                     .requestMatchers(HttpMethod.POST, "/voos", "/usuarios", "/cancelar").hasRole("USER") // Acesso publico ao cancelamento de tickets

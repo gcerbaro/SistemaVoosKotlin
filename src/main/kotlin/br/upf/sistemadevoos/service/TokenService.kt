@@ -16,7 +16,7 @@ class TokenService {
     @Value("\${api.security.token.secret}")
     private lateinit var secret: String
 
-    fun generateToke(usuario: Usuario): String {
+    fun generateToken(usuario: Usuario): String {
         return try {
             val algorithm = Algorithm.HMAC256(secret)
             JWT.create()

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
-class SecurityFilter(
+class LoginChecker(
     val tokenService: TokenService,
     val userRepository: UsuarioRepository
 ) : OncePerRequestFilter() {

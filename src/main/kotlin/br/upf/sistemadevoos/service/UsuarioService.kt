@@ -11,7 +11,7 @@ import br.upf.sistemadevoos.repository.VooRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
-private const val NFMESSAGE = "Voo Não encontrado!"
+private const val NFMESSAGE = "Usuario Não encontrado!"
 
 @Service
 class UsuarioService(
