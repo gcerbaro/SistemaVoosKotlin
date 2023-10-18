@@ -10,8 +10,10 @@ data class Ticket(
     val valor: Float,
     val data: LocalDateTime,
     val assento: Int,
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "voo_id")
     val vooID: Voo,
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
     val usuarioID: Usuario
 )
