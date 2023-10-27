@@ -5,17 +5,21 @@ import br.upf.sistemadevoos.dtos.CityResponseDTO
 import br.upf.sistemadevoos.service.CityService
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
+import org.springframework.data.domain.Page
 
 @Controller
 class CityController(private val service : CityService) {
     @GetMapping
-    fun listar() : List<CityResponseDTO>{
-        return service.listar()
+    fun listar(@RequestParam(required = false) cidade: String?,
+               @PageableDefault(size=10) paginacao: Pageable) : Page<CityResponseDTO>{
+        return service.listar(cidade, paginacao)
     }
 
     @GetMapping("/{id}")

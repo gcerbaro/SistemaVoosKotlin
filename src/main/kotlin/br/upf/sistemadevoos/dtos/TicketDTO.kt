@@ -1,13 +1,13 @@
 package br.upf.sistemadevoos.dtos
 
-import br.upf.sistemadevoos.model.Usuario
-import br.upf.sistemadevoos.model.Voo
 import java.time.LocalDateTime
 
 data class TicketDTO (
-    val usuarioID : Usuario,
-    val vooID : Voo,
+    val usuarioID : Long,
+    val vooID : Long,
     val assento : String,
-    val data : LocalDateTime,
+    val partida : LocalDateTime,
+    val chegada : LocalDateTime,
+    val embarque: LocalDateTime,
     val valor : Float
 )

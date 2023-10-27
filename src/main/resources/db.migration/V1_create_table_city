@@ -1,0 +1,5 @@
+CREATE TABLE `city`(
+    `id` bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `latitude` FLOAT NOT NULL,
+    `longitude` FLOAT NOT NULL;
+)

@@ -21,7 +21,21 @@ class VooController(val service: VooService) {
     fun listar(@RequestParam(required = false) voo: String?,
                @PageableDefault(size=10) paginacao: Pageable
     ) : Page<VooResponseDTO> {
-        return service.listar(voo, paginacao)
+        return service.listarPorOrigem(voo, paginacao)
+    }
+
+    @GetMapping("/origem")
+    fun listarOrigem(@RequestParam(required = false) voo: String?,
+               @PageableDefault(size=10) paginacao: Pageable
+    ) : Page<VooResponseDTO> {
+        return service.listarPorOrigem(voo, paginacao)
+    }
+
+    @GetMapping("/destino")
+    fun listarDestino(@RequestParam(required = false) voo: String?,
+               @PageableDefault(size=10) paginacao: Pageable
+    ) : Page<VooResponseDTO> {
+        return service.listarPorDestino(voo, paginacao)
     }
 
     @GetMapping("/{id}")

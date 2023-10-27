@@ -12,7 +12,11 @@ class VooConverter {
             origem = dto.origem,
             destino = dto.destino,
             nAssentos = dto.nAssentos,
-            assentosDisp = listOf()
+            partida = dto.partida,
+            chegada = dto.partida,
+            embarque = dto.partida,
+            status = dto.status,
+            assentosDisp = dto.seatList
         )
     }
 
@@ -22,7 +26,24 @@ class VooConverter {
             origem = voo.origem,
             destino = voo.destino,
             nAssentos = voo.nAssentos,
+            partida = voo.partida,
+            chegada = voo.chegada,
+            embarque = voo.embarque,
+            status = voo.status,
             assentosDisp = voo.assentosDisp
+        )
+    }
+
+    fun toVooDTO(voo : Voo) : VooDTO{
+        return VooDTO(
+                origem = voo.origem,
+                destino = voo.destino,
+                nAssentos = voo.nAssentos,
+                partida = voo.partida,
+                chegada = voo.partida,
+                embarque = voo.partida,
+                status = voo.status,
+                seatList = voo.assentosDisp
         )
     }
 }

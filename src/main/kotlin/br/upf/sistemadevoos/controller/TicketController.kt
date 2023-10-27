@@ -5,6 +5,9 @@ import br.upf.sistemadevoos.dtos.TicketResponseDTO
 import br.upf.sistemadevoos.service.TicketService
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -13,11 +16,13 @@ import org.springframework.web.util.UriComponentsBuilder
 
 @RestController
 @RequestMapping("/ticket")
-class TicketController(val service: TicketService){
+class TicketController(private val service: TicketService){
 
     @GetMapping
-    fun listar(): List<TicketResponseDTO> {
-        return service.listar()
+    fun listar(@RequestParam(required = false) ticket: Long?,
+               @PageableDefault(size=10) paginacao: Pageable
+    ) : Page<TicketResponseDTO> {
+        return service.listar(ticket, paginacao)
     }
 
     @GetMapping("/{id}")
@@ -41,7 +46,7 @@ class TicketController(val service: TicketService){
     fun atualizar(@PathVariable id: Long,
                   @RequestBody @Valid dto: TicketDTO
     ): TicketResponseDTO {
-        return service.atualizar(id)
+        return service.atualizar(id, dto)
     }
 
     @DeleteMapping("/{id}")

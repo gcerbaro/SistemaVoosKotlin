@@ -1,11 +1,11 @@
 package br.upf.sistemadevoos.dtos
 
-import br.upf.sistemadevoos.model.Ticket
+import br.upf.sistemadevoos.enums.UserTitle
 
 data class UsuarioDTO(
     val nome: String,
     val cidade: String,
     val email: String,
     val senha: String,
-    val tickets: List<Ticket> = listOf()
+    val title: UserTitle,
 )
