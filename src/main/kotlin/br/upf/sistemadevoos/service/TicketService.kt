@@ -4,7 +4,7 @@ import br.upf.sistemadevoos.converter.TicketConverter
 import br.upf.sistemadevoos.dtos.TicketDTO
 import br.upf.sistemadevoos.dtos.TicketResponseDTO
 import br.upf.sistemadevoos.exceptions.NotFoundException
-import br.upf.sistemadevoos.exceptions.TooLateToRefund
+import br.upf.sistemadevoos.exceptions.TooLateToRefundException
 import br.upf.sistemadevoos.repository.TicketRepository
 import br.upf.sistemadevoos.repository.VooRepository
 import org.springframework.stereotype.Service
@@ -43,7 +43,7 @@ class TicketService (private val ticketRepository: TicketRepository,
         val voo = vooRepository.findById(id).orElseThrow{ NotFoundException(NFFLIGHT)}
 
         if(LocalDateTime.now() >= voo.partida.minusHours(2)){
-            throw TooLateToRefund(REFUNDLATE)
+            throw TooLateToRefundException(REFUNDLATE)
         }
 
         vooService.adicionarAssento(voo.id!!, ticket.assento)

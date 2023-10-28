@@ -12,7 +12,8 @@ data class Voo(
         val origem: String,
         @ManyToOne
         val destino: String,
-        val nAssentos: Int,
+        @ManyToOne
+        val aviaoID : Long,
         @Enumerated(value = EnumType.STRING)
         var status: VooStatus,
         val partida : LocalDateTime,

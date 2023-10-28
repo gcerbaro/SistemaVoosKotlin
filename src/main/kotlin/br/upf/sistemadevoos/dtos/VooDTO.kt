@@ -11,10 +11,10 @@ data class VooDTO(
         @field:NotNull(message = "Voo deve ter uma cidade de destino")
     val destino: String,
         @field:NotNull(message = "Voo deve conter o numero de assentos")
-    val nAssentos: Int,
+        val aviaoID : Long,
         val partida : LocalDateTime,
-        val chegada : LocalDateTime = partida,
-        val embarque: LocalDateTime = partida,
-        val seatList : String = "",
+        var chegada : LocalDateTime = partida,
+        var embarque: LocalDateTime = partida,
+        val assentosDisp : String = "",
         var status : VooStatus = VooStatus.ONTIME
 )

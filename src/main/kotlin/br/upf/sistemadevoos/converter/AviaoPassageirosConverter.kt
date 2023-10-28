@@ -10,7 +10,7 @@ class AviaoPassageirosConverter {
                 id = aviao.id,
                 manufacturer = aviao.manufacturer,
                 planeModel = aviao.planeModel,
-                matricula = aviao.matricula,
+                aircraftRegistration = aviao.aircraftRegistration,
                 fuelTankSize = aviao.fuelTankSize,
                 avgFuelConsumption = aviao.avgFuelConsumption,
                 avgSpeed = aviao.avgSpeed,
@@ -26,7 +26,7 @@ class AviaoPassageirosConverter {
         return AviaoPassageiros(
                 manufacturer = dto.manufacturer,
                 planeModel = dto.planeModel,
-                matricula = dto.matricula,
+                aircraftRegistration = dto.aircraftRegistration,
                 fuelTankSize = dto.fuelTankSize,
                 avgFuelConsumption = dto.avgFuelConsumption,
                 avgSpeed = dto.avgSpeed,
@@ -35,6 +35,22 @@ class AviaoPassageirosConverter {
                 linhas = dto.linhas,
                 colunas = dto.colunas,
                 seatList = dto.seatList
+        )
+    }
+
+    fun toAviaoPassageirosDTO(aviao : AviaoPassageiros) : AviaoPassageirosDTO{
+        return AviaoPassageirosDTO(
+                aviao.manufacturer,
+                aviao.planeModel,
+                aviao.aircraftRegistration,
+                aviao.fuelTankSize,
+                aviao.avgFuelConsumption,
+                aviao.avgSpeed,
+                aviao.status,
+                aviao.passagengers,
+                aviao.linhas,
+                aviao.colunas,
+                aviao.seatList
         )
     }
 

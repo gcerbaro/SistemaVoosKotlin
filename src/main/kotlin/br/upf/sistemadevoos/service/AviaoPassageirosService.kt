@@ -1,5 +1,6 @@
 package br.upf.sistemadevoos.service
 
+import br.upf.sistemadevoos.converter.AviaoConverter
 import br.upf.sistemadevoos.converter.AviaoPassageirosConverter
 import br.upf.sistemadevoos.dtos.AviaoPassageirosDTO
 import br.upf.sistemadevoos.dtos.AviaoPassageirosResponseDTO
@@ -18,7 +19,9 @@ private const val INVPMESSAGE = "Parametros Invalidos: Inconsistencia entre a " 
 @Service
 class AviaoPassageirosService (
         private val repository : AviaoPassageirosRepository,
-        private val converter : AviaoPassageirosConverter
+        private val converter : AviaoPassageirosConverter,
+        private val aviaoService : AviaoService,
+        private val aviaoConverter : AviaoConverter
 ){
 
     fun listar(
@@ -46,6 +49,8 @@ class AviaoPassageirosService (
         }
             dto.seatList = generateSeatList(dto)
 
+            aviaoService.cadastrar(aviaoConverter.fromAviaoPassageirosDTOtoAviao(dto))
+
             return converter.toAviaoPassageirosResponseDTO(
                     repository.save(converter.toAviaoPassageiros(dto))
             )
@@ -60,11 +65,11 @@ class AviaoPassageirosService (
                 .orElseThrow { NotFoundException(NFMESSAGE) }
                 .copy(
                     manufacturer = dto.manufacturer,
-                    plane_model = dto.plane_model,
-                    matricula = dto.matricula,
-                    fuel_tank_size = dto.fuel_tank_size,
-                    avg_fuel_consumption = dto.avg_fuel_consumption,
-                    avg_speed = dto.avg_speed,
+                    planeModel = dto.planeModel,
+                    aircraftRegistration = dto.aircraftRegistration,
+                    fuelTankSize = dto.fuelTankSize,
+                    avgFuelConsumption = dto.avgFuelConsumption,
+                    avgSpeed = dto.avgSpeed,
                     status = dto.status,
                     passagengers = dto.passagengers,
                     linhas = dto.linhas,

@@ -1,7 +1,6 @@
 package br.upf.sistemadevoos.model
 
 import br.upf.sistemadevoos.enums.AviaoStatus
-import br.upf.sistemadevoos.interfaces.Aviao
 import jakarta.persistence.*
 
 data class AviaoPassageiros(
@@ -9,7 +8,7 @@ data class AviaoPassageiros(
         val id: Long? = null,
         override val manufacturer: String,
         override val planeModel: String,
-        override val matricula: String,
+        override val aircraftRegistration: String,
         override val fuelTankSize: Float,
         override val avgFuelConsumption: Float,
         override val avgSpeed: Float,

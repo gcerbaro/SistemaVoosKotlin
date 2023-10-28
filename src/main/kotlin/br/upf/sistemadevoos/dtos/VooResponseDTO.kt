@@ -7,7 +7,7 @@ data class VooResponseDTO(
         val id: Long?,
         val origem: String,
         val destino: String,
-        val nAssentos: Int,
+        val aviaoID : Long,
         val partida : LocalDateTime,
         val chegada : LocalDateTime,
         val embarque : LocalDateTime,

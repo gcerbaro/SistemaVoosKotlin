@@ -6,7 +6,7 @@ data class AviaoPassageirosResponseDTO(
         val id: Long?,
         val manufacturer : String,
         val  planeModel : String,
-        val  matricula : String,
+        val  aircraftRegistration : String,
         val  fuelTankSize : Float,
         val  avgFuelConsumption : Float,
         val  avgSpeed : Float,

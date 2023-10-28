@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository
 interface AviaoPassageirosRepository : JpaRepository<AviaoPassageiros, Long> {
     fun findByManufacturer(aviao: String, paginacao: Pageable): Page<AviaoPassageiros>
 
+    fun findByAircraftRegistration(aircraftRegistration : String) : AviaoPassageiros
+
 }

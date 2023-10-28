@@ -11,12 +11,12 @@ class VooConverter {
         return Voo(
             origem = dto.origem,
             destino = dto.destino,
-            nAssentos = dto.nAssentos,
+            aviaoID = dto.aviaoID,
             partida = dto.partida,
             chegada = dto.partida,
             embarque = dto.partida,
             status = dto.status,
-            assentosDisp = dto.seatList
+            assentosDisp = dto.assentosDisp
         )
     }
 
@@ -25,7 +25,7 @@ class VooConverter {
             id = voo.id,
             origem = voo.origem,
             destino = voo.destino,
-            nAssentos = voo.nAssentos,
+            aviaoID = voo.aviaoID,
             partida = voo.partida,
             chegada = voo.chegada,
             embarque = voo.embarque,
@@ -38,12 +38,12 @@ class VooConverter {
         return VooDTO(
                 origem = voo.origem,
                 destino = voo.destino,
-                nAssentos = voo.nAssentos,
+                aviaoID = voo.aviaoID,
                 partida = voo.partida,
                 chegada = voo.partida,
                 embarque = voo.partida,
                 status = voo.status,
-                seatList = voo.assentosDisp
+                assentosDisp = voo.assentosDisp
         )
     }
 }
