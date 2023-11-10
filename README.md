@@ -9,13 +9,13 @@
  - *Technologies*
     - Framework
         - Spring Boot (3.1.4)
-    - Linguagem
+    - Language
         - Kotlin (1.8.22)
     - Database
-        - as of now, MySql via Db4Free (https://www.db4free.net/index.php), debated about switching to MongoDB in the future
+        - As of now, MySql via Db4Free (https://www.db4free.net/index.php), debated about switching to MongoDB in the future
  - *Installation*
     - GIT clone https://github.com/gcerbaro/SistemaVoosKotlin
-    - Run MarketGameApplication.kt
+    - Run SistemadevoosApplication.kt
 
 ---
 ## EndPoints
