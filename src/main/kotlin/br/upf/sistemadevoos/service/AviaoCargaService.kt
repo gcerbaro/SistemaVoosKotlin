@@ -47,13 +47,14 @@ class AviaoCargaService(private val repository : AviaoCargaRepository,
         val aviao = repository.findById(id)
                 .orElseThrow { NotFoundException(NFMESSAGE) }
                 .copy(
-                        manufacturer = dto.manufacturer,
-                        planeModel = dto.planeModel,
-                        aircraftRegistration = dto.aircraftRegistration,
-                        fuelTankSize = dto.fuelTankSize,
-                        avgFuelConsumption = dto.avgFuelConsumption,
-                        avgSpeed = dto.avgSpeed,
-                        status = dto.status,
+                        fabricante = dto.manufacturer,
+                        modelo = dto.planeModel,
+                        registro = dto.aircraftRegistration,
+                        tanque = dto.fuelTankSize,
+                        consumo = dto.avgFuelConsumption,
+                        velocidade = dto.avgSpeed,
+                        condicao = dto.status,
+                        cargoWeight = dto.cargoWeight
                 )
 
         return converter.toAviaoCargaResponseDTO(repository.save(aviao))

@@ -1,13 +1,30 @@
-# SistemaVoosKotlin
-Trabalho de Programação Web e Mobile UPF 2023/2
+## Back-end API
+*Description*
+ - This is an application for the management of a flying company
+ - Originally developed as an assignment for Web and Mobile Programming in the University of Passo Fundo's 
+ Computer Science course
+ - Undergoing improvements
 
-# Installation and Setup
-git clone ou baixando o arquivo .zip marcado pela tag v1.0.1
+ ---
+ - *Technologies*
+    - Framework
+        - Spring Boot (3.1.4)
+    - Linguagem
+        - Kotlin (1.8.22)
+    - Database
+        - as of now, MySql via Db4Free (https://www.db4free.net/index.php), debated about switching to MongoDB in the future
+ - *Installation*
+    - GIT clone https://github.com/gcerbaro/SistemaVoosKotlin
+    - Run MarketGameApplication.kt
 
-# Usage
-Executar o arquivo SistemadevoosApplication.kt em "sistemadevooskotlin\src\main\kotlin\br\upf\sistemadevoos" para
-rodar o servidor. Estara disponivel em http://localhost:8080, pode-se usar, opcionalmente o servico postman(postman.com/) para
-fazer requisicoes http e utilizar o servico na versao atual (back-end only).
+---
+## EndPoints
+- *URL*
+  - localhost:8080
+---
+- *Postman*
+  - Collection
+
 
 ### Credits
 

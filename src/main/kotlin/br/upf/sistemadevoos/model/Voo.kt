@@ -9,11 +9,14 @@ data class Voo(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
         @ManyToOne
-        val origem: String,
+        @JoinColumn(name = "origemID")
+        val origem: City,
         @ManyToOne
-        val destino: String,
+        @JoinColumn(name = "destinoID")
+        val destino: City,
         @ManyToOne
-        val aviaoID : Long,
+        @JoinColumn(name = "aviaoID")
+        val aviaoID : AviaoPassageiros,
         @Enumerated(value = EnumType.STRING)
         var status: VooStatus,
         val partida : LocalDateTime,

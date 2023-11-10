@@ -64,17 +64,17 @@ class AviaoPassageirosService (
         val aviao = repository.findById(id)
                 .orElseThrow { NotFoundException(NFMESSAGE) }
                 .copy(
-                    manufacturer = dto.manufacturer,
-                    planeModel = dto.planeModel,
-                    aircraftRegistration = dto.aircraftRegistration,
-                    fuelTankSize = dto.fuelTankSize,
-                    avgFuelConsumption = dto.avgFuelConsumption,
-                    avgSpeed = dto.avgSpeed,
-                    status = dto.status,
-                    passagengers = dto.passagengers,
-                    linhas = dto.linhas,
-                    colunas = dto.colunas,
-                    seatList = dto.seatList
+                        fabricante = dto.manufacturer,
+                        modelo = dto.planeModel,
+                        registro = dto.aircraftRegistration,
+                        tanque = dto.fuelTankSize,
+                        consumo = dto.avgFuelConsumption,
+                        velocidade = dto.avgSpeed,
+                        condicao = dto.status,
+                        passagengers = dto.passagengers,
+                        linhas = dto.linhas,
+                        colunas = dto.colunas,
+                        seatList = dto.seatList
             )
 
         return converter.toAviaoPassageirosResponseDTO(repository.save(aviao))
@@ -108,7 +108,6 @@ class AviaoPassageirosService (
             }
         }
 
-        stringDeAssentos = stringDeAssentos.dropLast(1) //O ultimo character sera um espaco em branco ' ', remove-o
         return stringDeAssentos
     }
 }

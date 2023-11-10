@@ -6,13 +6,19 @@ import jakarta.persistence.*
 data class AviaoCarga(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
-        override val manufacturer : String,
-        override val  planeModel : String,
-        override val  aircraftRegistration : String,
-        override val  fuelTankSize : Float,
-        override val  avgFuelConsumption : Float,
-        override val  avgSpeed : Float,
+        val fabricante : String,
+        val  modelo : String,
+        val  registro : String,
+        val  tanque : Float,
+        val  consumo : Float,
+        val  velocidade : Float,
         @Enumerated(value = EnumType.STRING)
-        override val  status : AviaoStatus = AviaoStatus.AVAILABLE,
+        val  condicao : AviaoStatus = AviaoStatus.AVAILABLE,
         val cargoWeight : Float
-) : Aviao
+) : Aviao(manufacturer = fabricante,
+        planeModel = modelo,
+        aircraftRegistration = registro,
+        fuelTankSize = tanque,
+        avgFuelConsumption = consumo,
+        avgSpeed = velocidade,
+        status = condicao)

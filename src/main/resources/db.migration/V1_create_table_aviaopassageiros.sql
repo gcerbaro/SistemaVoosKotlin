@@ -10,5 +10,5 @@ CREATE TABLE `aviaopassageiros` (
 `passengers` INT,
 `linhas` INT,
 `colunas` INT,
-`seatlist` VARHCAR(1800);
+`seatlist` VARCHAR(1800);
 )

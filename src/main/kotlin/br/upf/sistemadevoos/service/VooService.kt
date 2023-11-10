@@ -9,9 +9,12 @@ import br.upf.sistemadevoos.enums.AviaoStatus
 import br.upf.sistemadevoos.enums.VooStatus
 import br.upf.sistemadevoos.exceptions.NotFoundException
 import br.upf.sistemadevoos.exceptions.UnavailablePlaneException
+import br.upf.sistemadevoos.exceptions.UnsuitablePlaneException
 import br.upf.sistemadevoos.model.AviaoPassageiros
 import br.upf.sistemadevoos.model.City
+import br.upf.sistemadevoos.model.Voo
 import br.upf.sistemadevoos.repository.AviaoPassageirosRepository
+import br.upf.sistemadevoos.repository.CityRepository
 import br.upf.sistemadevoos.repository.VooRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -20,17 +23,20 @@ import java.time.LocalDateTime
 
 private const val NFMESSAGE = "Voo Não encontrado!"
 private const val NFPLANE = "Avião Não encontrado!"
+private const val NFCITY = "Cidade não encontrada!"
+private const val NOTENOUGHFUEL = "Este avião não possui combustível suficiente para esta viagem"
 
 @Service
 class VooService (
     private val repository: VooRepository,
     private val converter: VooConverter,
     private val cityService : CityService,
+    private val cityRepository : CityRepository,
     private val aviaoService : AviaoPassageirosService,
     private val aviaoConverter : AviaoPassageirosConverter,
     private val aviaoRepository : AviaoPassageirosRepository
 ) {
-    companion object{ //gambiarra do kotlin pq n tem static
+    companion object{
         var jetFuelCost : Float = 1.1f //Preco em dolar / litro, poderia ser 3.5 dolar / galao americano
     }
 
@@ -46,21 +52,7 @@ class VooService (
 
         //atualizar informacoes no momento da listagem
         for(v in voos){
-            if(LocalDateTime.now() >= v.partida){
-                var novoStatus = VooStatus.DEPARTED
-
-                if(LocalDateTime.now() >= v.chegada){
-                   novoStatus = VooStatus.ARRIVED
-                    val aviao : AviaoPassageiros = aviaoRepository.findById(v.aviaoID).orElseThrow { NotFoundException(NFPLANE) }
-                    val aviaodto : AviaoPassageirosDTO = aviaoConverter.toAviaoPassageirosDTO(aviao)
-                    aviaodto.status = AviaoStatus.AVAILABLE
-                }
-
-                val novoVoo = converter.toVooDTO(v)
-                novoVoo.status = novoStatus
-
-                atualizar(v.id!!, novoVoo)
-            }
+            atualizarStatusVoo(v)
         }
 
         return voos
@@ -80,23 +72,7 @@ class VooService (
 
         //atualizar informacoes no momento da listagem
         for(v in voos){
-            if(LocalDateTime.now() >= v.partida){
-                var novoStatus = VooStatus.DEPARTED
-
-                if(LocalDateTime.now() >= v.chegada){
-                    novoStatus = VooStatus.ARRIVED
-                    val aviao : AviaoPassageiros = aviaoRepository.findById(v.aviaoID).orElseThrow { NotFoundException(NFPLANE) }
-                    val aviaodto : AviaoPassageirosDTO = aviaoConverter.toAviaoPassageirosDTO(aviao)
-                    aviaodto.status = AviaoStatus.AVAILABLE
-
-                    aviaoService.atualizar(aviao.id!!, aviaodto)
-                }
-
-                val novoVoo = converter.toVooDTO(v)
-                novoVoo.status = novoStatus
-
-                atualizar(v.id!!, novoVoo)
-            }
+            atualizarStatusVoo(v)
         }
 
         return voos
@@ -109,22 +85,27 @@ class VooService (
     }
 
     fun cadastrar(dto: VooDTO): VooResponseDTO { //Entra como VooDTO, chegada = partida, embarque = partida
-        val origem : City = cityService.buscaPorNome(dto.origem)
-        val destino : City = cityService.buscaPorNome(dto.destino)
-        val aviao : AviaoPassageiros = aviaoRepository.findById(dto.aviaoID).orElseThrow { NotFoundException(NFPLANE) }
+        val origem : City = cityRepository.findById(dto.origem.id!!).orElseThrow { NotFoundException(NFCITY) }
+        val destino : City = cityRepository.findById(dto.destino.id!!).orElseThrow { NotFoundException(NFCITY) }
+        val aviao : AviaoPassageiros = aviaoRepository.findById(dto.aviaoID.id!!).orElseThrow { NotFoundException(NFPLANE) }
         val distance : Double = cityService.calculateDistance(origem, destino)
 
         if(aviao.status != AviaoStatus.AVAILABLE){
             throw UnavailablePlaneException("Aviao Indisponivel")
         }
 
+        val addHours : Long = (distance / aviao.avgSpeed).toLong()
+        val requiredFuel = aviao.avgFuelConsumption * addHours
+
+        if(requiredFuel > aviao.fuelTankSize){
+            throw UnsuitablePlaneException(NOTENOUGHFUEL)
+        }
+
         val aviaodto : AviaoPassageirosDTO = aviaoConverter.toAviaoPassageirosDTO(aviao)
         aviaodto.status = AviaoStatus.UNAVAILABLE
 
         aviaoService.atualizar(aviao.id!!, aviaodto)
-        val addHours : Long = (distance / aviao.avgSpeed).toLong()
 
-        dto.embarque = dto.embarque.minusHours(2)
         dto.chegada = dto.embarque.plusHours(addHours)
 
 
@@ -150,6 +131,14 @@ class VooService (
     }
 
     fun deletar(id: Long) {
+
+        val aviaodto : AviaoPassageirosDTO = aviaoConverter.toAviaoPassageirosDTO(
+                aviaoRepository.findById(id).orElseThrow { NotFoundException(NFPLANE) }
+        )
+
+        aviaodto.status = AviaoStatus.AVAILABLE
+
+        aviaoService.atualizar(id, aviaodto)
         repository.deleteById(id)
     }
 
@@ -189,4 +178,41 @@ class VooService (
         atualizar(voo.id!!, converter.toVooDTO(voo))
     }
 
+    /**
+     * @param v Is a flight to have its STATUS property checked
+     * Purpose: when making a GET request, updates the info
+     * on a flight's status whether it has arrived, has departed
+     * or remains ontime.
+     * @return Unit, is basically a void function
+     */
+    fun atualizarStatusVoo(v : Voo){
+        if(LocalDateTime.now() >= v.partida){
+            var novoStatus = VooStatus.DEPARTED
+
+            if(LocalDateTime.now() >= v.chegada){
+                novoStatus = VooStatus.ARRIVED
+                val aviao : AviaoPassageiros = aviaoRepository.findById(v.aviaoID.id!!).orElseThrow { NotFoundException(NFPLANE) }
+                val aviaodto : AviaoPassageirosDTO = aviaoConverter.toAviaoPassageirosDTO(aviao)
+                aviaodto.status = AviaoStatus.AVAILABLE
+
+                aviaoService.atualizar(aviao.id!!, aviaodto)
+            }
+
+            val novoVoo = converter.toVooDTO(v)
+            novoVoo.status = novoStatus
+
+            atualizar(v.id!!, novoVoo)
+        }
+    }
+
+    fun calcularCustoVoo(v: Voo) : Float{
+        val horas = v.chegada - v.partida
+        val consumo = v.aviaoID.avgFuelConsumption * horas
+
+        return consumo * jetFuelCost
+    }
+
+    fun custoPorPassageiro(v: Voo) : Float{
+        return calcularCustoVoo(v) / v.aviaoID.passagengers
+    }
 }

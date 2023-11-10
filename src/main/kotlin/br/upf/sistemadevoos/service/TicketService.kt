@@ -5,6 +5,7 @@ import br.upf.sistemadevoos.dtos.TicketDTO
 import br.upf.sistemadevoos.dtos.TicketResponseDTO
 import br.upf.sistemadevoos.exceptions.NotFoundException
 import br.upf.sistemadevoos.exceptions.TooLateToRefundException
+import br.upf.sistemadevoos.model.Ticket
 import br.upf.sistemadevoos.repository.TicketRepository
 import br.upf.sistemadevoos.repository.VooRepository
 import org.springframework.stereotype.Service
@@ -51,12 +52,11 @@ class TicketService (private val ticketRepository: TicketRepository,
     }
 
     fun cadastrar(dto: TicketDTO): TicketResponseDTO {
-        val voo = vooRepository.findById(dto.vooID).orElseThrow{ NotFoundException(NFFLIGHT)}
-
+        val voo = vooRepository.findById(dto.vooID.id!!).orElseThrow{ NotFoundException(NFFLIGHT)}
         vooService.removerAssento(dto.assento, voo.id!!)
 
         return converter.toTicketResponseDTO(
-            ticketRepository.save(converter.toTicket(dto))
+            ticketRepository.save(calcularValor(dto))
         )
     }
 
@@ -76,5 +76,22 @@ class TicketService (private val ticketRepository: TicketRepository,
             ticketRepository.findByIdPageable(ticket, paginacao)
         }
         return tickets.map(converter::toTicketResponseDTO)
+    }
+
+    fun calcularValor(ticket : TicketDTO) : Ticket{
+        var preco = vooService.custoPorPassageiro(ticket.vooID)
+
+        if(ticket.assento[0] == 'A'){
+            preco += (preco * 50) / 100
+        } else if(ticket.assento[0] == 'B'){
+            preco += (preco * 25) / 100
+        } else{
+            preco += (preco * 10) / 100
+        }
+
+        val passagem = converter.toTicket(ticket)
+        passagem.valor = preco
+
+        return passagem
     }
 }

@@ -7,17 +7,17 @@ import java.time.LocalDateTime
 data class Ticket(
         @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long? = null,
-        val valor: Float,
+        var valor: Float,
         val partida: LocalDateTime,
         val chegada: LocalDateTime,
         val embarque: LocalDateTime,
         val assento: String,
 
         @ManyToOne
-    @JoinColumn(name = "voo_id")
-        val vooID: Long,
+    @JoinColumn(name = "vooID")
+        val vooID: Voo,
 
         @ManyToOne
-    @JoinColumn(name = "usuario_id")
-        val usuarioID: Long
+    @JoinColumn(name = "usuarioID")
+        val usuarioID: Usuario
 )
