@@ -51,15 +51,4 @@ class UsuarioController (val service: UsuarioService){
         service.deletar(id)
     }
 
-    @PostMapping("/comprar")
-    @Transactional
-    fun comprarTicket(@PathVariable id: Long, vooId:Long) {
-        service.comprarTicket(id, vooId)
-    }
-
-    @PostMapping("/cancelar")
-    @Transactional
-    fun cancelarTicket(@PathVariable ticketid: Long) {
-        service.cancelarTicket(ticketid)
-    }
 }

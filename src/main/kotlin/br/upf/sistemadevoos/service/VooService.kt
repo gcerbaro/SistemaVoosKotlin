@@ -56,4 +56,30 @@ class VooService (
     fun deletar(id: Long) {
         repository.deleteById(id)
     }
+
+    fun removerAssento(assento : String, id: Long){
+        val voo = repository.findById(id).orElseThrow { NotFoundException(NFMESSAGE) }
+
+        if(voo.assentosDisp.lastIndexOf(assento) == voo.assentosDisp.length-1) {
+            voo.assentosDisp.replace(assento, "")
+        } else{
+            voo.assentosDisp.replace("$assento ", "")
+        }
+
+        atualizar(voo.id!!, converter.toVooDTO(voo))
+    }
+
+    fun adicionarAssento(id : Long, assento : String) {
+        val voo = repository.findById(id).orElseThrow { NotFoundException(NFMESSAGE) }
+
+        val mulLista = voo.assentosDisp.split(" ").toMutableList()
+        mulLista.add(assento)
+
+        mulLista.sort()
+        val modifiedList = mulLista.map{"$it "}.toMutableList()
+        voo.assentosDisp = modifiedList.toString()
+
+        atualizar(voo.id!!, converter.toVooDTO(voo))
+    }
+
 }

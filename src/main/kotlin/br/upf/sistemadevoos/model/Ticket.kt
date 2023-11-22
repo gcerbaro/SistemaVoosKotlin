@@ -8,8 +8,10 @@ data class Ticket(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     val valor: Float,
-    val data: LocalDateTime,
-    val assento: Int,
+    val partida: LocalDateTime,
+    val chegada: LocalDateTime,
+    val embarque: LocalDateTime,
+    val assento: String,
     @ManyToOne
     @JoinColumn(name = "voo_id")
     val vooID: Voo,
