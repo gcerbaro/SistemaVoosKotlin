@@ -18,10 +18,4 @@ data class AviaoPassageiros(
         val linhas: Int,
         val colunas: Int,
         val seatList: String
-) : Aviao(manufacturer = fabricante,
-        planeModel = modelo,
-        aircraftRegistration = registro,
-        fuelTankSize = tanque,
-        avgFuelConsumption = consumo,
-        avgSpeed = velocidade,
-        status = condicao)
+)

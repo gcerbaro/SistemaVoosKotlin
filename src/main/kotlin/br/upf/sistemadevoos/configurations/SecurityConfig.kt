@@ -33,12 +33,16 @@ class SecurityConfig(val securityFilter: LoginChecker) {
                     .requestMatchers(HttpMethod.POST, "/cidades", "cidades/*" ).hasRole("ADMIN") //Apenas admin pode criar cidades
                     .requestMatchers(HttpMethod.POST,"/auth/*").permitAll()
                     .requestMatchers(HttpMethod.POST, "/ticket").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios").hasRole("ADMIN") // Apenas admin pode criar voos e usuarios
-                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios", "/comprar").hasRole("USER") // Acesso publico a compra de tickets
-                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios", "/cancelar").hasRole("USER") // Acesso publico ao cancelamento de tickets
-                    .requestMatchers(HttpMethod.PUT, "/voos/*", "/usuarios/*").hasRole("ADMIN") // Apenas admin pode atualizar informacoes
-                    .requestMatchers(HttpMethod.DELETE, "/voos/*", "/usuarios/*").hasRole("ADMIN") // Apenas admin pode deletar
-                    .requestMatchers(HttpMethod.GET, "/ticket").hasRole("ADMIN") // Apenas admin tem acesso a lista de ticket
+                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios").permitAll()//hasRole("ADMIN") // Apenas admin pode criar voos e usuarios
+                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios", "/tickets").hasRole("USER") // Acesso publico a compra de tickets
+                    .requestMatchers(HttpMethod.POST, "/voos", "/usuarios", "/tickets").hasRole("USER") // Acesso publico ao cancelamento de tickets
+                    .requestMatchers(HttpMethod.PUT, "/voos/*", "/usuarios/*").permitAll()//hasRole("ADMIN") // Apenas admin pode atualizar informacoes
+                    .requestMatchers(HttpMethod.DELETE, "/voos/*", "/usuarios/*").permitAll()//hasRole("ADMIN") // Apenas admin pode deletar
+                    .requestMatchers(HttpMethod.GET, "/ticket").permitAll()//hasRole("ADMIN") // Apenas admin tem acesso a lista de ticket
+                    .requestMatchers(HttpMethod.GET, "/aviaocarga", "/aviaopassageiros").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/aviaocarga", "/aviaopassageiros").permitAll()
+                    .requestMatchers(HttpMethod.PUT, "/aviaocarga", "/aviaopassageiros").permitAll()
+                    .requestMatchers(HttpMethod.DELETE, "/aviaocarga", "/aviaopassageiros").permitAll()
                     .anyRequest().authenticated()
             }
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter::class.java)

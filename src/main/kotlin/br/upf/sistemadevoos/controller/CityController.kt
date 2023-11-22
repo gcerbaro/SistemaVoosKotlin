@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import org.springframework.data.domain.Page
 
 @Controller
+@RequestMapping("cidades")
 class CityController(private val service : CityService) {
     @GetMapping
     fun listar(@RequestParam(required = false) cidade: String?,

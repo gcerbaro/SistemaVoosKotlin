@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 
 @RestController
-@RequestMapping("/aviao/aviaocarga")
+@RequestMapping("/aviaocarga")
 class AviaoCargaController(private val service : AviaoCargaService) {
 
     @GetMapping

@@ -1,6 +1,5 @@
 package br.upf.sistemadevoos.service
 
-import br.upf.sistemadevoos.converter.AviaoConverter
 import br.upf.sistemadevoos.converter.AviaoPassageirosConverter
 import br.upf.sistemadevoos.dtos.AviaoPassageirosDTO
 import br.upf.sistemadevoos.dtos.AviaoPassageirosResponseDTO
@@ -19,9 +18,7 @@ private const val INVPMESSAGE = "Parametros Invalidos: Inconsistencia entre a " 
 @Service
 class AviaoPassageirosService (
         private val repository : AviaoPassageirosRepository,
-        private val converter : AviaoPassageirosConverter,
-        private val aviaoService : AviaoService,
-        private val aviaoConverter : AviaoConverter
+        private val converter : AviaoPassageirosConverter
 ){
 
     fun listar(
@@ -48,8 +45,6 @@ class AviaoPassageirosService (
             throw InvalidParametersException(INVPMESSAGE)
         }
             dto.seatList = generateSeatList(dto)
-
-            aviaoService.cadastrar(aviaoConverter.fromAviaoPassageirosDTOtoAviao(dto))
 
             return converter.toAviaoPassageirosResponseDTO(
                     repository.save(converter.toAviaoPassageiros(dto))

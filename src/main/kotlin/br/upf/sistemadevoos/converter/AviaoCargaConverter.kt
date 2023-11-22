@@ -9,13 +9,13 @@ class AviaoCargaConverter {
     fun toAviaoCargaResponseDTO(aviao : AviaoCarga) : AviaoCargaResponseDTO{
         return AviaoCargaResponseDTO(
                 id = aviao.id,
-                manufacturer = aviao.manufacturer,
-                planeModel = aviao.planeModel,
-                aircraftRegistration = aviao.aircraftRegistration ,
-                fuelTankSize = aviao.fuelTankSize,
-                avgFuelConsumption = aviao.avgFuelConsumption,
-                avgSpeed = aviao.avgSpeed,
-                status = aviao.status,
+                manufacturer = aviao.fabricante,
+                planeModel = aviao.modelo,
+                aircraftRegistration = aviao.registro ,
+                fuelTankSize = aviao.tanque,
+                avgFuelConsumption = aviao.consumo,
+                avgSpeed = aviao.velocidade,
+                status = aviao.condicao,
                 cargoWeight = aviao.cargoWeight
         )
     }

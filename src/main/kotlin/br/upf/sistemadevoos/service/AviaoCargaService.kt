@@ -1,7 +1,6 @@
 package br.upf.sistemadevoos.service
 
 import br.upf.sistemadevoos.converter.AviaoCargaConverter
-import br.upf.sistemadevoos.converter.AviaoConverter
 import br.upf.sistemadevoos.dtos.AviaoCargaDTO
 import br.upf.sistemadevoos.dtos.AviaoCargaResponseDTO
 import br.upf.sistemadevoos.exceptions.NotFoundException
@@ -12,9 +11,7 @@ import org.springframework.data.domain.Pageable
 private const val NFMESSAGE = "Aviao não encontrado!"
 
 class AviaoCargaService(private val repository : AviaoCargaRepository,
-                        private val converter: AviaoCargaConverter,
-                        private val aviaoService : AviaoService,
-                        private val aviaoConverter : AviaoConverter) {
+                        private val converter: AviaoCargaConverter) {
     fun listar(
             aviao : String?,
             paginacao : Pageable
@@ -34,9 +31,6 @@ class AviaoCargaService(private val repository : AviaoCargaRepository,
     }
 
     fun cadastrar(dto : AviaoCargaDTO) : AviaoCargaResponseDTO {
-
-        aviaoService.cadastrar(aviaoConverter.fromAviaoCargaDTOtoAviao(dto))
-
         return converter.toAviaoCargaResponseDTO(
                 repository.save(converter.toAviaoCarga(dto))
         )

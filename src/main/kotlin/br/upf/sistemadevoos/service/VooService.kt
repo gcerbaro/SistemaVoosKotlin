@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
+import java.time.Duration
 
 private const val NFMESSAGE = "Voo Não encontrado!"
 private const val NFPLANE = "Avião Não encontrado!"
@@ -90,14 +91,14 @@ class VooService (
         val aviao : AviaoPassageiros = aviaoRepository.findById(dto.aviaoID.id!!).orElseThrow { NotFoundException(NFPLANE) }
         val distance : Double = cityService.calculateDistance(origem, destino)
 
-        if(aviao.status != AviaoStatus.AVAILABLE){
+        if(aviao.condicao != AviaoStatus.AVAILABLE){
             throw UnavailablePlaneException("Aviao Indisponivel")
         }
 
-        val addHours : Long = (distance / aviao.avgSpeed).toLong()
-        val requiredFuel = aviao.avgFuelConsumption * addHours
+        val addHours : Long = (distance / aviao.velocidade).toLong()
+        val requiredFuel = aviao.consumo * addHours
 
-        if(requiredFuel > aviao.fuelTankSize){
+        if(requiredFuel > aviao.tanque){
             throw UnsuitablePlaneException(NOTENOUGHFUEL)
         }
 
@@ -206,8 +207,8 @@ class VooService (
     }
 
     fun calcularCustoVoo(v: Voo) : Float{
-        val horas = v.chegada - v.partida
-        val consumo = v.aviaoID.avgFuelConsumption * horas
+        val horas = Duration.between(v.partida, v.chegada).toHours()
+        val consumo = v.aviaoID.consumo * horas
 
         return consumo * jetFuelCost
     }

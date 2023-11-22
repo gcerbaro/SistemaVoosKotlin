@@ -15,10 +15,4 @@ data class AviaoCarga(
         @Enumerated(value = EnumType.STRING)
         val  condicao : AviaoStatus = AviaoStatus.AVAILABLE,
         val cargoWeight : Float
-) : Aviao(manufacturer = fabricante,
-        planeModel = modelo,
-        aircraftRegistration = registro,
-        fuelTankSize = tanque,
-        avgFuelConsumption = consumo,
-        avgSpeed = velocidade,
-        status = condicao)
+)
