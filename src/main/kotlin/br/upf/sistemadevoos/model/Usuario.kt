@@ -14,8 +14,6 @@ data class Usuario(
     val role: UserRole = UserRole.USER,
     val cidade: String,
     val email: String,
-    @OneToMany
-    var tickets: List<Ticket> = listOf()
 ) : UserDetails {
     override fun getAuthorities(): MutableList<SimpleGrantedAuthority> =
         if (role == UserRole.ADMIN) mutableListOf(

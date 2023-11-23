@@ -14,7 +14,7 @@ private const val NFMESSAGE = "Ticket Não encontrado!"
 @Service
 class TicketService (private val ticketRepository: TicketRepository,
                      private val converter: TicketConverter,
-                    private val vooService: VooService){
+                     private val vooService: VooService){
 
     fun atualizar(id: Long): TicketResponseDTO {
         val ticket = ticketRepository.findById(id)
@@ -33,16 +33,12 @@ class TicketService (private val ticketRepository: TicketRepository,
 
     fun cadastrar(dto: TicketDTO): TicketResponseDTO {
         val voo : VooResponseDTO = vooService.buscarPorId(dto.vooID.id!!)
-
-        vooService.removerAssento(dto.assento, dto.vooID.id)
+        vooService.removerAssento(dto.assento, voo.id!!)
 
         val ticket = dto.copy(
                 usuarioID = dto.usuarioID,
                 vooID = dto.vooID,
                 assento = dto.assento,
-                partida = voo.partida,
-                chegada = voo.chegada,
-                embarque = voo.embarque,
                 valor = dto.valor
         )
 

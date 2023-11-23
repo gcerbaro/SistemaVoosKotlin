@@ -14,7 +14,6 @@ class UsuarioConverter {
             nome = usuario.nome,
             cidade = usuario.cidade,
             email = usuario.email,
-            tickets = listOf()
         )
     }
 
@@ -23,7 +22,6 @@ class UsuarioConverter {
             nome = dto.nome,
             cidade = dto.cidade,
             email = dto.email,
-            tickets = dto.tickets,
             senha = BCryptPasswordEncoder().encode(dto.senha)
         )
     }

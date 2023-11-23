@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 
 @Controller
+@RequestMapping("/cidades")
 class CityController(private val service : CityService) {
     @GetMapping
     fun listar() : List<CityResponseDTO>{

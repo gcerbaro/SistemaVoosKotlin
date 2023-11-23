@@ -7,5 +7,4 @@ data class UsuarioResponseDTO(
     val nome: String,
     val cidade: String,
     val email: String,
-    val tickets: List<Ticket> = listOf()
 )

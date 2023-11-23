@@ -9,8 +9,5 @@ data class TicketDTO (
     val usuarioID : Usuario,
     val vooID : Voo,
     val assento : String,
-    val partida : LocalDateTime? = null,
-    val chegada : LocalDateTime? = null,
-    val embarque : LocalDateTime? = null,
     val valor : Float = (4.0f * Random.nextDouble(1.0, 5.0).toFloat() ) * 100.0f
 )

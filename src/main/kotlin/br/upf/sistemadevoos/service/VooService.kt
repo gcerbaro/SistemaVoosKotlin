@@ -3,6 +3,7 @@ package br.upf.sistemadevoos.service
 import br.upf.sistemadevoos.converter.VooConverter
 import br.upf.sistemadevoos.dtos.VooDTO
 import br.upf.sistemadevoos.dtos.VooResponseDTO
+import br.upf.sistemadevoos.exceptions.InvalidParametersException
 import br.upf.sistemadevoos.exceptions.NotFoundException
 import br.upf.sistemadevoos.model.Voo
 import br.upf.sistemadevoos.repository.VooRepository
@@ -11,7 +12,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 private const val NFMESSAGE = "Voo Não encontrado!"
-
+private const val NESEAT = "Este assento não existe ou não está disponível. Por favor, tente outro assento."
 @Service
 class VooService (
     private val repository: VooRepository,
@@ -60,10 +61,18 @@ class VooService (
     fun removerAssento(assento : String, id: Long){
         val voo = repository.findById(id).orElseThrow { NotFoundException(NFMESSAGE) }
 
+        if(!voo.assentosDisp.contains(assento)){
+            throw InvalidParametersException(NESEAT)
+        }
+
         if(voo.assentosDisp.lastIndexOf(assento) == voo.assentosDisp.length-1) {
-            voo.assentosDisp.replace(assento, "")
+            voo.assentosDisp = voo.assentosDisp.replace(assento, "")
         } else{
-            voo.assentosDisp.replace("$assento ", "")
+            val ultimoIndex = voo.assentosDisp.lastIndexOf(assento)+1
+            if(voo.assentosDisp[ultimoIndex] != ' '){
+                throw InvalidParametersException(NESEAT)
+            }
+            voo.assentosDisp = voo.assentosDisp.replace("$assento ", "")
         }
 
         atualizar(voo.id!!, converter.toVooDTO(voo))
@@ -73,11 +82,16 @@ class VooService (
         val voo = repository.findById(id).orElseThrow { NotFoundException(NFMESSAGE) }
 
         val mulLista = voo.assentosDisp.split(" ").toMutableList()
-        mulLista.add(assento)
+        mulLista.add("$assento ")
 
         mulLista.sort()
-        val modifiedList = mulLista.map{"$it "}.toMutableList()
-        voo.assentosDisp = modifiedList.toString()
+        var estringue = ""
+
+        for(i in mulLista){
+            estringue += "$i "
+        }
+
+        voo.assentosDisp = estringue
 
         atualizar(voo.id!!, converter.toVooDTO(voo))
     }

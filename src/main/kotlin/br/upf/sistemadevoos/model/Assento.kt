@@ -5,7 +5,7 @@ class Assento (classe : Char, linha : Int){
     private val line : Int = linha
 
     override fun toString() : String {
-        return "${assentoClasse}+${line}"
+        return "${assentoClasse}${line}"
     }
 
 companion object {

@@ -7,5 +7,4 @@ data class UsuarioDTO(
     val cidade: String,
     val email: String,
     val senha: String,
-    val tickets: List<Ticket> = listOf()
 )

@@ -11,9 +11,6 @@ class TicketConverter {
         return TicketResponseDTO(
             id = ticket.id,
             valor = ticket.valor,
-            partida = ticket.partida,
-            chegada = ticket.chegada,
-            embarque = ticket.embarque,
             assento = ticket.assento,
             vooID = ticket.vooID,
             usuarioID = ticket.usuarioID
@@ -23,9 +20,6 @@ class TicketConverter {
     fun toTicket(dto: TicketDTO) : Ticket{
         return Ticket(
                 valor = dto.valor,
-                partida = dto.partida!!,
-                chegada = dto.chegada!!,
-                embarque = dto.embarque!!,
                 assento = dto.assento,
                 vooID = dto.vooID,
                 usuarioID = dto.usuarioID

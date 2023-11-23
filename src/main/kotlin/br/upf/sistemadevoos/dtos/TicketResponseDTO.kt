@@ -9,8 +9,5 @@ data class TicketResponseDTO(
     val usuarioID: Usuario,
     val vooID: Voo,
     val assento: String,
-    val partida: LocalDateTime,
-    val chegada: LocalDateTime,
-    val embarque: LocalDateTime,
     val valor: Float
 )

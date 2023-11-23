@@ -17,8 +17,6 @@ private const val NFMESSAGE = "Usuario Não encontrado!"
 class UsuarioService(
     private val repository: UsuarioRepository,
     private val converter: UsuarioConverter,
-    private val vooRepository: VooRepository,
-    private val ticketRepository : TicketRepository
 ) {
     fun listar(): List<UsuarioResponseDTO>{
         return repository.findAll().map(converter::toUsuarioResponseDTO)
