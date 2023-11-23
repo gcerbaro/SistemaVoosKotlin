@@ -65,13 +65,10 @@ class VooService (
             throw InvalidParametersException(NESEAT)
         }
 
+        //se o assento estiver no fim da lista
         if(voo.assentosDisp.lastIndexOf(assento) == voo.assentosDisp.length-1) {
             voo.assentosDisp = voo.assentosDisp.replace(assento, "")
         } else{
-            val ultimoIndex = voo.assentosDisp.lastIndexOf(assento)+1
-            if(voo.assentosDisp[ultimoIndex] != ' '){
-                throw InvalidParametersException(NESEAT)
-            }
             voo.assentosDisp = voo.assentosDisp.replace("$assento ", "")
         }
 
