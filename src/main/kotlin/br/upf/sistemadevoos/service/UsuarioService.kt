@@ -15,8 +15,8 @@ private const val NFMESSAGE = "Usuario Não encontrado!"
 
 @Service
 class UsuarioService(
-    private val repository: UsuarioRepository,
-    private val converter: UsuarioConverter,
+        private val repository: UsuarioRepository,
+        private val converter: UsuarioConverter,
 ) {
     fun listar(): List<UsuarioResponseDTO>{
         return repository.findAll().map(converter::toUsuarioResponseDTO)
@@ -24,23 +24,23 @@ class UsuarioService(
 
     fun buscarPorId(id: Long): UsuarioResponseDTO{
         val usuario = repository.findById(id)
-            .orElseThrow { NotFoundException(NFMESSAGE) }
+                .orElseThrow { NotFoundException(NFMESSAGE) }
         return converter.toUsuarioResponseDTO(usuario)
     }
 
     fun cadastrar(dto: UsuarioDTO): UsuarioResponseDTO {
         return converter.toUsuarioResponseDTO(
-            repository.save(converter.toUsuario(dto))
+                repository.save(converter.toUsuario(dto))
         )
     }
 
     fun atualizar(id:Long, dto: UsuarioDTO) : UsuarioResponseDTO {
         val usuario = repository.findById(id)
-            .orElseThrow { NotFoundException(NFMESSAGE) }
-            .copy(
-                nome = dto.nome,
-                cidade = dto.cidade,
-            )
+                .orElseThrow { NotFoundException(NFMESSAGE) }
+                .copy(
+                        nome = dto.nome,
+                        cidade = dto.cidade,
+                )
         return converter.toUsuarioResponseDTO(repository.save(usuario))
     }
 

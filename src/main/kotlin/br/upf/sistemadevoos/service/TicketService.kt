@@ -18,7 +18,7 @@ class TicketService (private val ticketRepository: TicketRepository,
 
     fun atualizar(id: Long): TicketResponseDTO {
         val ticket = ticketRepository.findById(id)
-            .orElseThrow { NotFoundException(NFMESSAGE) }
+                .orElseThrow { NotFoundException(NFMESSAGE) }
 
         val updatedTicket = ticketRepository.save(ticket)
 
@@ -43,13 +43,13 @@ class TicketService (private val ticketRepository: TicketRepository,
         )
 
         return converter.toTicketResponseDTO(
-            ticketRepository.save(converter.toTicket(ticket))
+                ticketRepository.save(converter.toTicket(ticket))
         )
     }
 
     fun buscarPorId(id: Long): TicketResponseDTO {
         val ticket = ticketRepository.findById(id)
-            .orElseThrow { NotFoundException(NFMESSAGE) }
+                .orElseThrow { NotFoundException(NFMESSAGE) }
         return converter.toTicketResponseDTO(ticket)
     }
 

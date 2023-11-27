@@ -20,10 +20,10 @@ class TokenService {
         return try {
             val algorithm = Algorithm.HMAC256(secret)
             JWT.create()
-                .withIssuer("auth-api")
-                .withSubject(usuario.email)
-                .withExpiresAt(genExpirationDate())
-                .sign(algorithm)
+                    .withIssuer("auth-api")
+                    .withSubject(usuario.email)
+                    .withExpiresAt(genExpirationDate())
+                    .sign(algorithm)
         } catch (expection: JWTCreationException) {
             throw RuntimeException("Erro na geracao de token!", expection)
         }
@@ -33,17 +33,17 @@ class TokenService {
         return try {
             val algorithm = Algorithm.HMAC256(secret)
             JWT.require(algorithm)
-                .withIssuer("auth-api")
-                .build()
-                .verify(token)
-                .subject
+                    .withIssuer("auth-api")
+                    .build()
+                    .verify(token)
+                    .subject
         } catch (expection: JWTVerificationException) {
             ""
         }
     }
 
     private fun genExpirationDate() =
-        LocalDateTime.now().plusHours(2)
-            .toInstant(ZoneOffset.of("-03:00"))
+            LocalDateTime.now().plusHours(2)
+                    .toInstant(ZoneOffset.of("-03:00"))
 
 }

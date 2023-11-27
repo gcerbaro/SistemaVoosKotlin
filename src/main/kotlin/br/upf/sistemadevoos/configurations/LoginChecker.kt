@@ -12,20 +12,20 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class LoginChecker(
-    val tokenService: TokenService,
-    val userRepository: UsuarioRepository
+        val tokenService: TokenService,
+        val userRepository: UsuarioRepository
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
+            request: HttpServletRequest,
+            response: HttpServletResponse,
+            filterChain: FilterChain
     ) {
         val token = recoverToken(request)
         if (token != null) {
             val email = tokenService.validateToken(token)
             val user = userRepository.findByEmail(email)
             val authentication =
-                UsernamePasswordAuthenticationToken(user, null, user.authorities)
+                    UsernamePasswordAuthenticationToken(user, null, user.authorities)
             SecurityContextHolder.getContext().authentication = authentication
         }
         filterChain.doFilter(request, response)

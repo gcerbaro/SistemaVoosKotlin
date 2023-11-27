@@ -24,18 +24,18 @@ class CityService(private val repository : CityRepository,
 
     fun cadastrar(dto : CityDTO) : CityResponseDTO{
         return converter.toCityResponseDTO(
-            repository.save(converter.toCity(dto))
+                repository.save(converter.toCity(dto))
         )
     }
 
     fun atualizar(id:Long, dto: CityDTO) : CityResponseDTO {
         val city = repository.findById(id)
-            .orElseThrow { NotFoundException(NFMESSAGE) }
-            .copy(
-                nome = dto.nome,
-                latitude = dto.latitude,
-                longitude = dto.longitude
-            )
+                .orElseThrow { NotFoundException(NFMESSAGE) }
+                .copy(
+                        nome = dto.nome,
+                        latitude = dto.latitude,
+                        longitude = dto.longitude
+                )
         return converter.toCityResponseDTO(repository.save(city))
     }
 

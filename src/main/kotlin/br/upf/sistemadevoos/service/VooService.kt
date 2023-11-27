@@ -15,12 +15,12 @@ private const val NFMESSAGE = "Voo Não encontrado!"
 private const val NESEAT = "Este assento não existe ou não está disponível. Por favor, tente outro assento."
 @Service
 class VooService (
-    private val repository: VooRepository,
-    private val converter: VooConverter
+        private val repository: VooRepository,
+        private val converter: VooConverter
 ) {
     fun listar(
-        voo: String?,
-        paginacao: Pageable
+            voo: String?,
+            paginacao: Pageable
     ): Page<VooResponseDTO> {
         val voos = if (voo == null) {
             repository.findAll(paginacao)
@@ -28,7 +28,7 @@ class VooService (
             repository.findByOrigem(voo, paginacao)
         }
         return voos
-            .map(converter::toVooResponseDTO)
+                .map(converter::toVooResponseDTO)
 
     }
 
@@ -39,18 +39,18 @@ class VooService (
 
     fun cadastrar(dto: VooDTO): VooResponseDTO {
         return converter.toVooResponseDTO(
-            repository.save(converter.toVoo(dto))
+                repository.save(converter.toVoo(dto))
         )
     }
 
     fun atualizar(id: Long, dto: VooDTO) : VooResponseDTO{
         val voo = repository.findById(id)
-            .orElseThrow { NotFoundException (NFMESSAGE) }
-            .copy(
-                origem = dto.origem,
-                destino = dto.destino,
-                nAssentos = dto.nAssentos
-            )
+                .orElseThrow { NotFoundException (NFMESSAGE) }
+                .copy(
+                        origem = dto.origem,
+                        destino = dto.destino,
+                        nAssentos = dto.nAssentos
+                )
         return converter.toVooResponseDTO(repository.save(voo))
     }
 
