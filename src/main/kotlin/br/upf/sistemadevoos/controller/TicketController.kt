@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/ticket")
 class TicketController(val service: TicketService){
